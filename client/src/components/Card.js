@@ -3,6 +3,7 @@ import Popup from './Popup';
 import { useDispatch, useSelector } from 'react-redux';
 import WebDisplayReducer from '../reducers/WebDisplayReducer.js';
 import { decrementQuantity, incrementQuantity} from '../actions/changeQuantity';
+import { deleteCardAsync } from '../redux/thunks';
 
 
 const Card = ({ item, onDelete }) => {
@@ -41,11 +42,6 @@ const Card = ({ item, onDelete }) => {
       <img src={item.image} alt={item.name} />
       <div className="card-content">
         <h3>{item.name}</h3>
-      </div>
-      <div className="quantity">
-          <button className="quantity-btn" onClick={handleDecrement}>-</button>
-          <span className="quantity-number">{quantity}</span>
-          <button className="quantity-btn" onClick={handleIncrement}>+</button>
       </div>
       {!showPopup && <button onClick={handleCardClick}>Expand</button>}
       {showPopup && <Popup item={item} onClose={handleClosePopup} />}

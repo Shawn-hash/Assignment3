@@ -20,12 +20,27 @@ router.get('/:cardId', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-  if (!req.body.name) {
-    return res.status(400).send({ message: 'Card must have a name!' })
+  if (!req.body.name || !req.body.description || !req.body.price || !req.body.image) {
+    return res.status(400).send({ message: 'Please fill in all the categories.' })
   }
-  const card = { id: uuid(), name: req.body.name };
+  const card = {
+    id: uuid(),
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    image: req.body.image
+  };
   cards.push(card);
   return res.send(card);
+});
+
+router.delete('/:cardId', function (req, res, next) {
+  const cardIndex = cards.findIndex(card => card.id === req.params.cardId);
+
+  if (cardIndex === -1) return res.status(404).send({ message: 'Card not found' });
+
+  const deletedCard = cards.splice(cardIndex, 1);
+  return res.send(deletedCard);
 });
 
 module.exports = router;

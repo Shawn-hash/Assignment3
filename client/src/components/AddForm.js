@@ -20,8 +20,6 @@ const AddForm = ({addItem}) => {
       image,
     };
     dispatch(addCardAsync(newItem));
-    // Pass the new item to the parent component
-    addItem(newItem);
     // Clear the form inputs
     setName('');
     setDescription('');

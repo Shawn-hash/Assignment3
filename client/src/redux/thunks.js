@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actionTypes } from '../actions/actionTypes';
-import CardService from './service';
 
 export const getCardsAsync = createAsyncThunk(
-  actionTypes.GET_USERS,
+  'cards/getCards',
   async () => {
-    return await CardService.getCards();
+    const response = await fetch('http://localhost:3001/cards');
+    const data = await response.json();
+    return data;
   }
 );
 
@@ -33,4 +34,24 @@ export const addCardAsync = createAsyncThunk(
     return data;
   }
 );
+
+export const deleteCardAsync = createAsyncThunk(
+  'cards/deleteCard',
+  async (id) => {
+    // Make the API request to delete the card with the given id
+    const response = await fetch('http://localhost:3001/:id', {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      const errorMsg = data?.message;
+      throw new Error(errorMsg)
+    }
+
+    // Return the id as the fulfilled action payload
+    return id;
+  }
+);
+
 
