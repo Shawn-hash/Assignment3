@@ -34,7 +34,7 @@ const CardContainer = () => {
     if (!cardToDelete) return;
 
     // Make an API request to delete the card from the server
-    fetch(`/cards/${cardToDelete.id}`, {
+    fetch(`http://localhost:3001/cards/${cardToDelete.id}`, {
       method: 'DELETE',
     })
       .then(() => {
