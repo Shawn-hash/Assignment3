@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addCardAsync } from '../redux/thunks';
 
 const AddForm = ({addItem}) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,8 +19,7 @@ const AddForm = ({addItem}) => {
       price,
       image,
     };
-    // Create Json object
-    const newItemJson = JSON.stringify(newItem);
+    dispatch(addCardAsync(newItem));
     // Pass the new item to the parent component
     addItem(newItem);
     // Clear the form inputs
