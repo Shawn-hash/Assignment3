@@ -43,6 +43,23 @@ const CardContainer = () => {
       });
   };
 
+  const handleEditItem = (id, updatedItem) => {
+    // Make an API request to update the card on the server
+    fetch(`http://localhost:3001/cards/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedItem),
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Update the local state with the updated card
+        setItems(prevItems => prevItems.map(item => item.id === id ? data : item));
+      });
+  };
+
+
   return (
     <div>
       <AddForm addItem={handleAddItem} />
